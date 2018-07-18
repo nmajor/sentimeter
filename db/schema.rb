@@ -10,10 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_18_190113) do
+ActiveRecord::Schema.define(version: 2018_07_18_193811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "name"
+    t.text "desc"
+    t.bigint "category_id"
+    t.string "keywords", default: [], array: true
+    t.string "homepage_url"
+    t.integer "positive_score"
+    t.integer "negative_score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.time "reviews_updated_at"
+    t.index ["category_id"], name: "index_organizations_on_category_id"
+    t.index ["reviews_updated_at"], name: "index_organizations_on_reviews_updated_at"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.bigint "organization_id"
+    t.integer "price"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_products_on_organization_id"
+    t.index ["price"], name: "index_products_on_price"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "organization_id"
+    t.json "full_sentiment", default: {}
+    t.string "sentiment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "remote_id"
+    t.text "text"
+    t.json "source", default: {}
+    t.string "from"
+    t.time "remote_created_at"
+    t.index ["organization_id"], name: "index_reviews_on_organization_id"
+    t.index ["remote_created_at"], name: "index_reviews_on_remote_created_at"
+    t.index ["remote_id"], name: "index_reviews_on_remote_id"
+    t.index ["sentiment"], name: "index_reviews_on_sentiment"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -32,4 +80,7 @@ ActiveRecord::Schema.define(version: 2018_07_18_190113) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "organizations", "categories"
+  add_foreign_key "products", "organizations"
+  add_foreign_key "reviews", "organizations"
 end

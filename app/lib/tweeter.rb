@@ -1,4 +1,4 @@
-class Twitter
+class Tweeter
   def search(query)
     client.search(query, result_type: "recent")
   end

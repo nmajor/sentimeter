@@ -3,7 +3,7 @@ class CreateReviews < ActiveRecord::Migration[5.2]
     create_table :reviews do |t|
       t.string :type
       t.references :organization, foreign_key: true
-      t.json :full_sentiment
+      t.json :full_sentiment, default: {}
       t.string :sentiment
 
       t.timestamps
