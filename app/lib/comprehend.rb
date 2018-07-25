@@ -1,6 +1,6 @@
 class Comprehend
-  def batchSentiment(text_list)
-    @client.batch_detect_sentiment(text_list: text_list, language_code: :en)
+  def batch_sentiment(text_list)
+    client.batch_detect_sentiment(text_list: text_list, language_code: :en)
   end
 
   def client

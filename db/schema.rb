@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_18_193811) do
+ActiveRecord::Schema.define(version: 2018_07_25_190848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,13 +27,12 @@ ActiveRecord::Schema.define(version: 2018_07_18_193811) do
     t.bigint "category_id"
     t.string "keywords", default: [], array: true
     t.string "homepage_url"
-    t.integer "positive_score"
-    t.integer "negative_score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.time "reviews_updated_at"
+    t.string "twitter_screen_name"
+    t.float "score"
     t.index ["category_id"], name: "index_organizations_on_category_id"
-    t.index ["reviews_updated_at"], name: "index_organizations_on_reviews_updated_at"
+    t.index ["score"], name: "index_organizations_on_score"
   end
 
   create_table "products", force: :cascade do |t|
@@ -49,7 +48,6 @@ ActiveRecord::Schema.define(version: 2018_07_18_193811) do
   create_table "reviews", force: :cascade do |t|
     t.bigint "organization_id"
     t.json "full_sentiment", default: {}
-    t.string "sentiment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "remote_id"
@@ -57,6 +55,7 @@ ActiveRecord::Schema.define(version: 2018_07_18_193811) do
     t.json "source", default: {}
     t.string "from"
     t.time "remote_created_at"
+    t.integer "sentiment"
     t.index ["organization_id"], name: "index_reviews_on_organization_id"
     t.index ["remote_created_at"], name: "index_reviews_on_remote_created_at"
     t.index ["remote_id"], name: "index_reviews_on_remote_id"

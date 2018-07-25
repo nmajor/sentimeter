@@ -6,4 +6,5 @@ Organization.create(
   keywords: [ 'bluehost', '@bluehost', 'bluehost.com' ],
   desc: 'Webhosting company',
   homepage_url: 'https://bluehost.com',
+  twitter_screen_name: 'bluehost',
 )

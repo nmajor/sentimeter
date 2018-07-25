@@ -1,7 +1,7 @@
 class Tweeter
-  def search(query, since_id=nil)
+  def search(query, options={})
     # https://www.rubydoc.info/gems/twitter/Twitter/REST/Search
-    client.search(query, result_type: "recent", since_id: since_id)
+    client.search(query + ' exclude:retweets', result_type: "recent", since_id: options[:since_id], lang: :en)
   end
 
   def client
