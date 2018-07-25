@@ -1,6 +1,7 @@
 class Tweeter
-  def search(query)
-    client.search(query, result_type: "recent")
+  def search(query, since_id=nil)
+    # https://www.rubydoc.info/gems/twitter/Twitter/REST/Search
+    client.search(query, result_type: "recent", since_id: since_id)
   end
 
   def client

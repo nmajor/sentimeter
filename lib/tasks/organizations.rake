@@ -1,16 +1,13 @@
 namespace :organizations do
   desc "Updates organization reviews and scores"
   task update_reviews: :environment do
-    p 'yo there'
     Organization.all.each do |organization|
-      p
-      organization.update(reviews_updated_at: Time.now)
+      p organization.update(reviews_updated_at: Time.now)
 
       q = organization.twitter_query
       tweets = Tweeter.new.search(q)
 
       tweets.each do |tweet|
-        p 'blah hi', tweet
         review = Review.new(
           organization: organization,
           from: "twitter",
@@ -21,6 +18,7 @@ namespace :organizations do
             created_at: tweet.created_at,
             id: tweet.id,
             text: tweet.text,
+            lang: twee.lang,
             user: {
               name: tweet.user.name,
               screen_name: tweet.user.screen_name,
