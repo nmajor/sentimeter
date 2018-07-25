@@ -1,0 +1,9 @@
+<h1><%= link_to @organization.name, @organization.homepage_url %></h1>
+<p><%= @organization.desc %></p>
+<div>Score: <%= @organization.score * 10 %></div>
+<div>Review Count: <%= @organization.reviews.length %></div>
+<% @organization.reviews.each do |review| %>
+  <div>
+    <%= review.sentiment %> - <%= review.text %>
+  </div>
+<% end %>

@@ -1,0 +1,12 @@
+<h1><%= @category.name.capitalize %></h1>
+<div>
+  <% @category.organizations.each do |organization| %>
+    <div>
+      <h3><%= link_to organization.name, organization.homepage_url %></h3>
+      <p><%= organization.desc %></p>
+      <div>Score: <%= organization.score * 10 %></div>
+      <div>Review Count: <%= organization.reviews.length %></div>
+      <div><%= link_to 'details', organization %></div>
+    </div>
+  <% end %>
+</div>
